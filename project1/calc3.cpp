@@ -39,8 +39,6 @@ int main()
     else if(s == '^')
     {
       int sqr = p*p;
-      
-      
     }
     
     //used to end one line and start the other
