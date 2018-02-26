@@ -1,5 +1,5 @@
 # CSCI136
-labs and projects for csci135/136 \n
-hunter college \n
+labs and projects for csci135/136;
+hunter college;
 spring 2018 
 
