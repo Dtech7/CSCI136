@@ -1,3 +1,5 @@
 # CSCI136
-labs for csci135/136
-1
+labs and projects for csci135/136
+hunter college
+spring 2018 
+
