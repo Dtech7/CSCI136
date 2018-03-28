@@ -6,6 +6,10 @@ Assignment: Lab 8B
 
 This program takes in a badly indented c++ file,
 then outputs an a properly indented version version.
+H
+I
+H
+I
 
 */
 
@@ -20,7 +24,7 @@ int countChar(string line, char c);
 
 int main()
 {
-    string inLine;
+    string inLine, new_line;
     char op = '{';
     char cl = '}';
     int openBraket = 0;
@@ -30,16 +34,27 @@ int main()
     
     while(getline(cin, inLine))
     { 
+        new_line = removeLeadingSpaces(inLine);
       
-      openBraket += countChar(inLine, op);
-      closeBraket += countChar(inLine, cl);
-      blocks = openBraket - closeBraket;
-      for(int i = 0; i < blocks; i++)
-      {
-        cout <<  "\t";
-      }
-      cout << removeLeadingSpaces(inLine) << endl;
+      if (new_line[0] == '}')
+        for(int i = 0; i < blocks-1; i++)
+        {
+          cout <<  "\t";
+        }        
+      else  
+        for(int i = 0; i < blocks; i++)
+        {
+          cout <<  "\t";
+        }
+
+     
+      openBraket = countChar(new_line, op);
+      closeBraket = countChar(new_line, cl);
+      blocks += openBraket - closeBraket;
+     
       
+      cout << new_line << endl;
+
     }
 
 }
