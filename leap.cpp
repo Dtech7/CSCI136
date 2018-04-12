@@ -3,7 +3,9 @@ Author: Neil Felix
 Course: CSCI-136
 Instructor:Minh Nguyen
 Assignment: Lab 1C
+
 This program ask the user for a year then checks if that year is a leap year.
+Then outputs "Leap year" if it is or "Common year" if it isn't.
 */
 
 #include <iostream>
