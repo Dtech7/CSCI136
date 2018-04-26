@@ -2,7 +2,7 @@
 Author: Neil Felix
 Course: CSCI-136
 Instructor: Minh Nguyen
-Assignment: Lab 9C
+Assignment: Lab 9E
 A
 A
 A
@@ -33,11 +33,14 @@ struct TimeSlot {
 };
 
 
-int minutesSinceMidnight(Time time);
-int minutesUntil(Time t1, Time t2);
-Time addMinutes(Time time0, int min);
-void printTimeSlot(TimeSlot ts);
 void printMovie(Movie mv);
+void printTimeSlot(TimeSlot ts);
+int minutesUntil(Time t1, Time t2);
+int minutesSinceMidnight(Time time);
+Time addMinutes(Time time0, int min);
+bool timeOverlap(TimeSlot ts1, TimeSlot ts2);
+TimeSlot scheduleAfter(TimeSlot ts, Movie nextMovie);
+
 
 int main()
 {
@@ -62,7 +65,7 @@ int main()
   
   cout << "These moments of time are " << x << " and " << y << " minutes after midnight." <<endl;
   cout << "The interval between them " << z << " minutes." << endl;
-  */
+  
   
   Movie movie1 = {"Back to the Future", COMEDY, 116};
   Movie movie2 = {"Black Panther", ACTION, 134};
@@ -74,7 +77,7 @@ int main()
   TimeSlot evening = {movie2, {16, 45}}; 
   TimeSlot morning2 = {movie3, {8, 25}};
   TimeSlot evening2 = {movie4, {17, 30}};
-  
+  */
   
   
   return 0;
@@ -128,4 +131,53 @@ void printTimeSlot(TimeSlot ts)
   printMovie(ts.movie);
   cout << " [starts at " << ts.startTime.h << ":"<< ts.startTime.m; 
   cout << ", ends by " << endTm.h << ":" << endTm.m << "]"; 
+}
+
+TimeSlot scheduleAfter(TimeSlot ts, Movie nextMovie)
+{
+  TimeSlot nxTmSlt;
+  nxTmSlt.startTime = addMinutes(ts.startTime, ts.movie.duration);
+  nxTmSlt.movie = nextMovie;
+  return nxTmSlt;
+}
+
+bool timeOverlap(TimeSlot ts1, TimeSlot ts2)
+{
+	int mv1Stime, mv2Stime, mv1TtlDur, mv2TtlDur;
+	Time mv1Etime, mv2Etime;
+	
+	mv1Stime = minutesSinceMidnight(ts1.startTime);
+	mv2Stime = minutesSinceMidnight(ts2.startTime);
+	mv1Etime = addMinutes(ts1.startTime, ts1.movie.duration);
+	mv2Etime = addMinutes(ts2.startTime, ts2.movie.duration);
+	mv1TtlDur = mv1Stime + minutesUntil(ts1.startTime, mv1Etime);
+	mv2TtlDur = mv2Stime + minutesUntil(ts2.startTime, mv2Etime);
+	
+	if(mv1Stime == mv2Stime)
+	{
+		return true;
+	}
+	else if(mv2Stime < mv1Stime)
+	{
+		if(mv1Stime < mv2TtlDur)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if(mv1Stime < mv2Stime)
+	{
+		if(mv2Stime < mv1TtlDur)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 }
