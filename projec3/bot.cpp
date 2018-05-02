@@ -3,7 +3,6 @@ Author: Neil Felix
 Course: CSCI-135
 Instructor: Genady Maryash
 Assignment: Project 3: Space Debris Collection
-
 Bots check cardinal and intercardinal directions for debris.
 If no debris is found at any of the direction,
 the bot will move in a random direction.
@@ -73,7 +72,18 @@ void onClockTick(int time, ostream &log)
 	if (time % 100 == 0) log << time << " ";
 }
 
-//scans the all directions directly around the robot
+int areaScan(int id, Loc loc, Area &area)
+{
+  int row = loc.r;
+	int col = loc.c;
+	int nextMove;
+	
+	if(area.inspect(nrow-1, ncol) == DEBRIS)
+	{
+	  
+	}
+}
+//scans large area
 int scan(int id, Loc loc, Area &area)
 {
   Loc nearestLoc(int id, Loc *locP, Loc loc, int arI);
@@ -82,7 +92,7 @@ int scan(int id, Loc loc, Area &area)
 	int col = loc.c;
 	int nextMove;
 	int arI = 0;
-	Loc tempLoc[25]
+	Loc tempLoc[25];
 	Loc *locAr;
 	Loc nrstLoc;
   
@@ -100,7 +110,7 @@ int scan(int id, Loc loc, Area &area)
     }
   }
   
-  locAr2 = new Loc[arI];
+  locAr = new Loc[arI];
   for(int i = 0; i < arI; i++)
   {
     locAr[i] = tempLoc[i];
@@ -108,8 +118,27 @@ int scan(int id, Loc loc, Area &area)
   
   nrstLoc = nearestLoc(id, locAr, loc, arI);
   
+  if(nrstLoc.r > loc.r)
+  {
+    nextMove = 4;
+  }
+  else if(nrstLoc.r < loc.r)
+  {
+    nextMove = 2;
+  }
+  else if(nrstLoc.r == loc.r)
+  {
+    if(nrstLoc.c > loc.c)
+    {
+      nextMove = 1; 
+    }
+    else if(nrstLoc.c < loc.c)
+    {
+      nextMove = 0;
+    }
+  }
   
-   
+  return nextMove;
 }
 
 Loc nearestLoc(int id, Loc *locP, Loc loc, int arI)
@@ -118,7 +147,7 @@ Loc nearestLoc(int id, Loc *locP, Loc loc, int arI)
   int nrstDist = 100;
   Loc nrstLoc;
   
-  for(int i=0; i < ari; i++)
+  for(int i=0; i < arI; i++)
   {
     curDist = abs((locP[i].r + locP[i].c) - (loc.r + loc.c));
     if(curDist < nrstDist)
@@ -130,5 +159,6 @@ Loc nearestLoc(int id, Loc *locP, Loc loc, int arI)
   
   return nrstLoc;
 }
+
 
 
